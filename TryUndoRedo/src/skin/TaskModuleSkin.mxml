@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+-->
+
+
+<!--- The default skin class for a Spark SkinnableContainer container.  
+
+     @see spark.components.SkinnableContainer
+      @langversion 3.0
+      @playerversion Flash 10
+      @playerversion AIR 1.5
+      @productversion Flex 4
+-->
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+    xmlns:fb="http://ns.adobe.com/flashbuilder/2009" alpha.disabled="0.5" xmlns:component="component.*" >
+	<fx:Metadata>[HostComponent("viewTest.TaskModule")]</fx:Metadata>
+
+    <fx:Script fb:purpose="styling">
+        <![CDATA[         
+            
+        ]]>        
+    </fx:Script>
+    
+    <s:states>
+        <s:State name="normal" />
+        <s:State name="disabled" />
+    </s:states>
+    
+    <s:Group id="contentGroup" left="0" right="0" top="0" bottom="0" minWidth="0" minHeight="0">
+		<s:VGroup horizontalAlign="center" paddingLeft="20" paddingTop="50" >
+			<s:HGroup>
+				<component:UndoableButton id="newTask" label="NewTask"  />
+				<component:UndoableButton id="deleteButton" label="Delete"  />	
+			</s:HGroup>
+			<s:DataGrid id="listTask"  height="300" width="300" editable="true"  >
+				<s:columns>
+					<s:ArrayList>
+						<s:GridColumn dataField="id"  />
+						<s:GridColumn dataField="name"  />
+					</s:ArrayList>
+				</s:columns>
+			</s:DataGrid>
+	</s:VGroup>	
+	</s:Group>
+
+</s:Skin>

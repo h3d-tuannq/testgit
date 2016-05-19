@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx"  minWidth="955" minHeight="600" 
+			   xmlns:viewTest="viewTest.*" xmlns:gui="net.projectkit.gui.*" xmlns:component="component.*" xmlns:skin="skin.*"
+			   creationComplete="loadViewComplete(event)" 
+			   >
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.FlexEvent;
+			
+			import spark.components.Alert;
+			
+			import net.projeckit.model.ProjectModel;
+			import net.projectkit.model.Task;
+			import net.projectkit.model.handler.ProjectHandler;
+			
+			import util.CollectionChangeManagerTest;
+			
+			[Bindable]
+			protected var model:ProjectModel;
+			
+			[Bindable]
+			protected var list:ArrayCollection;
+			
+			protected function undoButon_Click(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				viewTask.undoManager.performUndo();
+				viewTask.setModel(viewTask.undoManager.model);
+				
+			}
+			
+			protected function redoButon_Click(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				viewTask.undoManager.performRedo();
+				viewTask.setModel(viewTask.undoManager.model);
+			}
+			
+			protected function loadViewComplete(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				model = new ProjectModel();
+				var task:Task = new Task();
+				task.name = "task1";
+				task.id   = "t1";
+				var task2:Task = new Task();
+				task2.name = "task2";
+				task2.id   = "t2";
+				
+				var task3:Task = new Task();
+				task3.name = "task3";
+				task3.id   = "t3";
+				model.setUpTestTask([task,task2,task3]);
+				ProjectHandler.getInstance().start(model);
+				viewTask.setModel(model);
+			
+			}
+			
+			/*protected function newListTask_Click(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var tmpProject:Project = new Project();
+				var task:Task = new Task();
+				task.name = "task1";
+				task.id   = "t1";
+				var task2:Task = new Task();
+				task2.name = "task2";
+				task2.id   = "t2";
+				tmpProject.projectTasks = [task,task2];
+				ProjectHandler.getInstance().start(tmpProject);
+			//	viewTask.setModel(tmpProject);
+			}*/
+			
+			protected function testCollection_click(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				txtCollection.text = CollectionChangeManagerTest.getInstance().getInsertItems(viewTask._model.taskCollection).length.toString(10);
+				txtDelete.text = CollectionChangeManagerTest.getInstance().getDeleteItems(viewTask._model.taskCollection).length.toString(10);
+			}
+			
+			protected function help_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				var task:Task = new Task();
+				task.name = "task1";
+				var task2:Task = task;
+				task2.name = "anhtuan";
+				
+				var task3:Task = task2;
+				task3.name = "quantuan";
+				
+				var o1:Object = new Object();
+				o1.name = "abc";
+				
+				var o2:Object = new Object();
+				o2 = o1;
+				o2.name = "100";
+				
+				var o3:Object = new Object();
+				o3.name = "3";
+				o1= o3;
+				o1.name = "xyz";
+				o1 = o2;
+				o1.name = "nqt";
+				Alert.show(o1.name + "---------------" + o2.name + "-----------------" + o3.name);
+				
+			}
+			
+		]]>
+	</fx:Script>
+	<s:Group  >
+		<s:VGroup horizontalAlign="center" paddingLeft="300" paddingTop="50" >
+			<viewTest:TaskModule id="viewTask"  skinClass="skin.TaskModuleSkin"/>
+			<s:HGroup>
+				<s:Button id="undoButton" label="undo" click="undoButon_Click(event)" />
+				<s:Button id="redoButton" label="redo" click="redoButon_Click(event)" />
+			</s:HGroup>	
+			<s:HGroup>
+			<!--	<s:Button id="newListTask" label="NewListTask" click="newListTask_Click(event)" />-->
+				<s:Button id="testCollection" label="TestColection" click="testCollection_click(event)"/>
+				<s:Button id="help" label="help" click="help_clickHandler(event)"/>
+			</s:HGroup>
+			<s:HGroup>
+				<s:TextInput id="txtCollection" />
+				<s:TextInput id="txtDelete" />
+			</s:HGroup>
+		</s:VGroup>	
+	</s:Group>	
+</s:Application>
